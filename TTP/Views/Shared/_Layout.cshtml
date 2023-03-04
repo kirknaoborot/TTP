@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TTPROFI  настольный теннис, клуб настольного тенниса, настольный теннис в Нижнем Новгороде, Игра, ракетка, мяч, тренеры, инживидуальная тренировка</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/TTP.styles.css" asp-append-version="true" />
+    <link href="~/font-awesome/css/all.css" rel="stylesheet" />
+</head>
+<body>
+    <header>
+        <div class="container-fluid red">
+            <div class="container">
+                <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                        <div class="logo">
+                            <img src="~/images/logo.png" />
+                        </div>
+                    <div class="nav-items navbar-collapse collapse">
+                        <ul class="nav-ul navbar-nav">
+                                <li><a asp-action="Index" asp-controller="Home">ГЛАВНАЯ</a></li>
+                                <li><a href="#services">УСЛУГИ</a></li>
+                                <li><a href="#gallery">ГАЛЕРЕЯ</a></li>
+                                <li><a href="#coach">КОМАНДА</a></li>
+                                <li><a href="#contacts">КОНТАКТЫ</a></li>
+                            </ul>
+                        </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <main>
+        @RenderBody()
+    </main>
+    <footer>
+        <div class="container-fluid black">
+            <div class="container">
+                <div class="section" id="contacts">
+                    <div class="footer-custom">
+                        <div class="find-us">
+                            <div class="icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="find-text">
+                                <h4>Найти нас</h4>
+                                <span>г. Нижний Новгород, ул. Деловая 20А</span>
+                            </div>
+                        </div>
+                        <div class="find-us">
+                            <div class="icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="find-text">
+                                <h4>Позвонить нам</h4>
+                                <span><a href="callto:+79159447834">+7 (915) 944-78-34</a></span>
+                            </div>
+                        </div>
+                        <div class="find-us">
+                            <div class="icon">
+                                <i class="far fa-envelope-open"></i>
+                            </div>
+                            <div class="find-text">
+                                <h4>Написать нам</h4>
+                                <span><a href="mailto:ttprofi.n.novgorod@gmail.com">ttprofi.n.novgorod@gmail.com</a></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-map">
+                <div style="position:relative;overflow:hidden;"><a href="https://yandex.ru/maps/47/nizhny-novgorod/?utm_medium=mapframe&utm_source=maps" style="color:#eee;font-size:12px;position:absolute;top:0px;">Нижний Новгород</a><a href="https://yandex.ru/maps/47/nizhny-novgorod/house/delovaya_ulitsa_20a/YE0YdgBjS0AFQFtsfX9xdXlkZA==/?indoorLevel=1&ll=44.073252%2C56.304570&utm_medium=mapframe&utm_source=maps&z=17.15" style="color:#eee;font-size:12px;position:absolute;top:14px;">Деловая улица, 20А — Яндекс Карты</a><iframe src="https://yandex.ru/map-widget/v1/?indoorLevel=1&ll=44.073252%2C56.304570&mode=search&ol=geo&ouri=ymapsbm1%3A%2F%2Fgeo%3Fdata%3DCgozODI3ODI2MjAwEkzQoNC%2B0YHRgdC40Y8sINCd0LjQttC90LjQuSDQndC%2B0LLQs9C%2B0YDQvtC0LCDQlNC10LvQvtCy0LDRjyDRg9C70LjRhtCwLCAyMNCQIgoNAkswQhXiN2FC&z=17.15" height="300" frameborder="1" allowfullscreen="true" style="position:relative;"></iframe></div>
+            </div>
+            <div class="container">
+                <div class="footer-socials">
+                    <a class="">
+                        <i class="fa-brands fa-youtube"></i>
+                    </a>
+                    <a class="">
+                        <i class="fab fa-vk"></i>
+                    </a>
+                    <a class="">
+                        <i class="fab fa-telegram"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

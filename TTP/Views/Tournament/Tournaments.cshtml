@@ -1,0 +1,40 @@
+﻿@using System.Globalization;
+@model IEnumerable<TTP.Models.TournnamentViewModel>
+
+@{
+    ViewData["Title"] = "Tournaments";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="container">
+        <div class="section">
+
+            @{
+                if (Model.Any())
+                {
+                    <h1 class="text-center">Турниры</h1>
+                }
+                else
+                {
+                    <h2 class="text-center">Турниров пока нет :( Зайдите позже.</h2>
+                }
+            }
+
+            <ul class="tournaments-ul">
+                @foreach (var item in Model)
+                {
+                    <li class="tournament-item">
+                        <i class="fa-solid fa-table-tennis-paddle-ball"></i>
+                        <h2>@item.Name</h2>
+                        <h3>@item.Date.ToString("dd MMMM HH:mm", CultureInfo.CreateSpecificCulture("ru"))</h3>
+                        <text>Минимальное кол-во участников: @item.MaxPlayers</text>
+                        <text>Записалось: @item.Count</text>
+                        <a href="/Tournament/Details/@item.Id"><button>Записаться</button></a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,78 @@
+﻿@model TTP.Domain.Tournament
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="container">
+        <div class="section">
+        <h4>Создать турнир</h4>
+        <hr />
+        <div class="row">
+            <div class="col-md-4">
+                <form asp-controller="Tournament" asp-action="Add" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Name" class="control-label">Название турнира</label>
+                        <input asp-for="Name" name="name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Description" class="control-label">Описание турнира</label>
+                            <textarea asp-for="Description" name="description" class="form-control"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Date" class="control-label">Дата проведения</label>
+                            <input asp-for="Date" name="date" class="form-control" />
+                        <span asp-validation-for="Date" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MinPlayers" class="control-label">Минимальное кол-во игроков для проведения</label>
+                            <input asp-for="MinPlayers" name="minPlayers" class="form-control" />
+                        <span asp-validation-for="MinPlayers" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MaxPlayers" class="control-label">Максимальное кол-во игроков далее в запас</label>
+                            <input asp-for="MaxPlayers" name="maxPlayers" class="form-control" />
+                        <span asp-validation-for="MaxPlayers" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MaxRaiting" class="control-label">Максимальный рейтинг</label>
+                            <input asp-for="MaxRaiting" name="maxRaiting"  class="form-control" />
+                        <span asp-validation-for="MaxRaiting" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="TournamentType" class="control-label">Тип турнира</label>
+                            <select asp-for="TournamentType" name="type" class="form-control">
+                                <option value="ЛИЧНЫЙ">ЛИЧНЫЙ</option>
+                                <option value="КОМАНДНЫЙ">КОМАНДНЫЙ</option>
+                        </select>
+                        <span asp-validation-for="TournamentType" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Name" class="control-label">Проверочный ключ</label>
+                            <input asp-for="Name" name="key" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Создать" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+            </div>
+        </div>
+
+        <div>
+            <a asp-action="Index">Назад к списку турниров</a>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

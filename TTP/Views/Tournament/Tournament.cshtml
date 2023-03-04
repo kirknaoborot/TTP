@@ -1,0 +1,186 @@
+﻿@using System.Globalization;
+@model TournnamentViewModel
+
+@{
+    ViewData["Title"] = "Tournament";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class ="container-fluid">
+    <div class="container">
+        <div class="section">
+            <h1 class="text-center">Турнир: @Model.Name</h1>
+            <div class="tournament-info-header">
+                <div class="tournament-info-header-div-description">
+                    <text>Описание: @Model.Description</text>
+                </div>
+                <div class="tournament-info-header-div">
+                    @{
+                        if (Model.MaxRaiting == 0)
+                        {
+                            <text>Максимальный рейтинг: Без ограничений</text>
+                        }
+                        else
+                        {
+                            <text>Максимальный рейтинг: @Model.MaxRaiting</text>
+                        }
+                      }
+                </div>
+                <div class="tournament-info-header-div">
+                        @{
+                            if (Model.TournamentType == "ЛИЧНЫЙ")
+                            {
+                                <text>Минимальное кол-во участников: @Model.MinPlayers</text>
+                            }
+                            else
+                            {
+                                <text>Минимальное кол-во команд: @Model.MinPlayers</text>
+                            }
+                         }                            
+                </div>
+                <div class="tournament-info-header-div">
+                        @{
+                            if (Model.TournamentType == "ЛИЧНЫЙ")
+                            {
+                                <text>Максимальное кол-во участников, далее в запас: @Model.MaxPlayers</text>
+                            }
+                            else
+                            {
+                                <text>Максимальное кол-во команд, далее в запас: @Model.MaxPlayers</text>
+                            }
+                        }                            
+                </div>
+                <div class="tournament-info-header-div">
+                    @{
+                            if (Model.TournamentType == "ЛИЧНЫЙ")
+                            {
+                                <text>Записалось на данный момент: @Model.Players.Count</text>
+                            }
+                            else
+                            {     
+                                var ct = Model.Players.Count / 2;
+
+                                <text>Записалось на данный момент: @ct</text>
+                            };
+                       }
+                </div>
+                <div class="tournament-info-header-div-date">
+                    <h3>@Model.Date.ToString("dd MMMM HH:mm", CultureInfo.CreateSpecificCulture("ru"))</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+        <hr />
+        <div class="container">
+            <div class="section">
+                <div class="tournament-info">
+                    <div class="tournament-add-form">
+                        <div class="form">
+                            <h2>Регистрация на турнир</h2>
+                            <form asp-controller="Tournament" asp-action="Registration" method="post">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">ФИО</label>
+                                    <input type="text" class="form-control" name="nameFirst" aria-describedby="emailHelp" placeholder="Игрок">
+                                    <small id="emailHelp" class="form-text text-muted">Для точного определения рейтинга вводить без сокращений</small>
+                                </div>
+
+                                @{
+                                    if (Model.TournamentType == "КОМАНДНЫЙ")
+                                    {
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">ФИО</label>
+                                            <input type="text" class="form-control" name="nameLast" aria-describedby="emailHelp" placeholder="Игрок - 2">
+                                            <small id="emailHelp" class="form-text text-muted">Для точного определения рейтинга вводить без сокращений</small>
+                                        </div>
+                                    }
+                                }
+
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">Телефон</label>
+                                    <input type="tel" class="form-control" name="phoneFirst" placeholder="Телефон">
+                                </div>
+                                <div class="form-group d-none">
+                                    <input type="text" class="form-control" name="id" value="@Model.Id">
+                                </div>
+                                <div class="form-group d-none">
+                                    <input type="text" class="form-control" name="typeTournament" value="@Model.TournamentType">
+                                </div>
+                                <button type="submit" class="btn btn-primary" id="send-register">Записаться</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="tournament-players">
+                    @{
+                        if (Model.TournamentType == "ЛИЧНЫЙ")
+                        {
+                            <h2>Участники</h2>
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col" class="text-center">ФИО</th>
+                                        <th scope="col" class="text-center">РЕЙТИНГ</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        var count = 1;
+                                    }
+                                    @foreach (var item in Model.Players)
+                                    {
+                                        <tr>
+                                            <th scope="row">@count</th>
+                                            <td class="text-center">@item.FullName</td>
+                                            <td class="text-center">@item.Raiting</td>
+                                        </tr>
+
+                                        count++;
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                        else
+                        {
+                            var players = Model.Players.GroupBy(_ => _.TeamId).Select(_ => new
+                            {
+                                users = string.Join(" | ", _.Select(_ => _.FullName.Split(" ").First()).ToList()),
+                                raitings = _.Sum(_ => _.Raiting)
+                            })
+                            .ToList();
+
+                            <h2>Команды</h2>
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col" class="text-center">КОМАНДА</th>
+                                        <th scope="col" class="text-center">СУММАРНЫЙ РЕЙТИНГ</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                @{
+                                    var count = 1;
+                                }
+                                @foreach (var item in players)
+                                {
+                                    <tr>
+                                        <th scope="row">@count</th>
+                                        <td class="text-center">@item.users</td>
+                                        <td class="text-center">@item.raitings</td>
+                                    </tr>
+
+                                    count++;
+                                }
+                                </tbody>
+                            </table>
+                        }
+                    }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
